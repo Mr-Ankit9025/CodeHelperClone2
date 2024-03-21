@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container">
+<div class="row">
+    <div class="col-sm-4 mx-auto rounded-3 p-4">
+        <form method="post" enctype="multipart/form-data">
+
+        <label class="w-100">Course Category Name
+        <input type="text" name="courseCategoryName" class="form-control" />
+        </label>
+        <label class="w-100">Category Icon
+        <input type="file" name="categoryIcon" class="form-control" />
+        </label>
+            <input type="submit" class="btn btn-primary" value="Add Category"/>
+        </form>
+    </div>
+</div>
+
+    <table class="table table-bordered">
+        <tr>
+            <th>SR.No.</th>
+            <th>Category Name</th>
+            <th>Category Icon</th>
+            <th>Category Status</th>
+            <th>Action</th>
+        </tr>
+
+        @if (Model != null) { 
+            foreach(System.Data.DataRow data in Model.Rows)
+                {
+                    <tr>
+                        <th>@data[0]</th>
+                        <th>@data[1]</th>
+                        <th><img src="~/Content/images/CategoryImages/@data[2]" class="img-thumbnail" width="100" /></th>
+                        <th>@data[3]</th>
+                        <th><a href="#">Edit</a><a href="#">Delete</a></th>
+                    </tr>
+                }
+        
+        }
+    </table>
+</div>

@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "InstructorCourse";
+    Layout = "~/Views/Shared/_InstructorLayout.cshtml";
+    ViewBag.ActiveClass = "active";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="settings-widget">
+            <div class="settings-inner-blk p-0">
+                <div class="sell-course-head comman-space">
+                    <h3>Courses</h3>
+                    <p>Manage your courses and its update like live, draft and insight.</p>
+                </div>
+                <div class="comman-space pb-0">
+                    <div class="instruct-search-blk">
+                        <div class="show-filter choose-search-blk">
+                            <form action="#">
+                                <div class="row gx-2 align-items-center">
+                                    <div class="col-md-6 col-item">
+                                        <div class=" search-group">
+                                            <i class="feather-search"></i>
+                                            <input type="text" class="form-control" placeholder="Search our courses">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-6 col-item">
+                                        <div class="form-group select-form mb-0">
+                                            <select class="form-select select" name="sellist1">
+                                                <option>Choose</option>
+                                                <option>Angular</option>
+                                                <option>React</option>
+                                                <option>Node</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="settings-tickets-blk course-instruct-blk table-responsive">
+
+                        <table class="table table-nowrap mb-2">
+                            <thead>
+                                <tr>
+                                    <th>COURSES</th>
+                                    <th>Add Video</th>
+                                    <th>STUDENTS</th>
+                                    <th>STATUS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    foreach (System.Data.DataRow data in Model.Rows)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="sell-table-group d-flex align-items-center">
+                                                    <div class="sell-group-img">
+                                                        <a href="course-details.html">
+                                                            <img src='~/Content/images/courseImage/@data["course_cover_image"]' class="img-fluid " alt>
+                                                        </a>
+                                                    </div>
+                                                    <div class="sell-tabel-info">
+                                                        <p><a href="course-details.html">@data["course_title"]</a></p>
+                                                        <div class="course-info d-flex align-items-center border-bottom-0 pb-0">
+                                                            <div class="rating-img d-flex align-items-center">
+                                                                <img src="/content/assets/img/icon/icon-01.svg" alt>
+                                                                <p>0 Lesson</p>
+                                                            </div>
+                                                            <div class="course-view d-flex align-items-center">
+                                                                <img src="/content/assets/img/icon/timer-start.svg" alt>
+                                                                <p>
+                                                                    120min
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td><a class="btn btn-primary" href="/instructor/CourseVideoSection/@data[0]">Add Video</a></td>
+                                            <td>3200</td>
+                                            <td><span class="badge info-low">@data["course_status"]</span></td>
+                                        </tr>
+                                    }
+
+                                }
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

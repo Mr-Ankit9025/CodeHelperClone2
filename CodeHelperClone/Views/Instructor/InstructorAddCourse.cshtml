@@ -1,0 +1,215 @@
+﻿
+@{
+    ViewBag.Title = "InstructorAddCourse";
+    Layout = "~/Views/Shared/_InstructorLayout.cshtml";
+    ViewBag.ActiveClass = "active";
+}
+<script src="~/content/ckeditor2.js"></script>
+<section class="page-content course-sec">
+    <div class="alert alert-@ViewBag.AllertType alert-dismissible fade show" role="alert">
+         @ViewBag.AlertMessage
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="add-course-header">
+                    <h2>Add New Course</h2>
+                    <div class="add-course-btns">
+                        <ul class="nav">
+                            <li>
+                                <a href="/instructor/dashboard" class="btn btn-black">Back to Course</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="btn btn-success-dark">Save</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+
+                    <div class="widget-set">
+                        <div class="widget-setcount">
+                            <ul id="progressbar">
+                                <li class="progress-active">
+                                    <p><span></span> Basic Information</p>
+                                </li>
+                                <li>
+                                    <p><span></span> Courses Media</p>
+                                </li>
+                                <li>
+                                    <p><span></span> Settings</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="widget-content multistep-form">
+                            <form method="post" enctype="multipart/form-data">
+                                <fieldset id="first">
+                                    <div class="add-course-info">
+                                        <div class="add-course-inner-header">
+                                            <h4>Basic Information</h4>
+                                        </div>
+                                        <div class="add-course-form">
+                                            <div class="form-group">
+                                                <label class="add-course-label">Course Title</label>
+                                                <input type="text" name="course_title" class="form-control" placeholder="Course Title">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="add-course-label">Courses Category</label>
+                                                <select class="form-control select" name="course_cat">
+
+                                                    @if (Model != null)
+                                                    {
+                                                        foreach (System.Data.DataRow data in Model.Rows)
+                                                        {
+                                                            <option value="@data[0]">@data[1]</option>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <option disabled>Please wait for admin response.</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="add-course-label">Courses Level</label>
+                                                <select class="form-control select" name="course_level">
+                                                    <option selected disabled>--Select Course Level--</option>
+                                                    <option>Beginner</option>
+                                                    <option>Intermediate</option>
+                                                    <option>Experianced</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group mb-0">
+                                                <label class="add-course-label">Course Description</label>
+                                                <textarea class="form-control" name="course_desc" placeholder="Enter Descrption" id="Ckeditor2"></textarea>
+                                                <script>
+
+                                                    ClassicEditor.create(document.querySelector("#Ckeditor2"))
+                                                </script>
+                                            </div>
+                                        </div>
+                                        <div class="widget-btn">
+                                            <a class="btn btn-info-light next_btn">Next</a>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="field-card">
+                                    <div class="add-course-info">
+                                        <div class="add-course-inner-header">
+                                            <h4>Courses Media</h4>
+                                        </div>
+                                        <div class="add-course-form">
+                                            <div class="form-group">
+                                                <label class="add-course-label">Course cover image</label>
+                                                <div class="relative-form">
+                                                    <span id="imageName">No File Selected</span>
+                                                    <label class="relative-file-upload">
+                                                        Upload File <input type="file" name="course_thumb" id="fileInput">
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="add-image-box">
+                                                    <a href="javascript:void(0);">
+                                                        <img id="imagePreview" class="img-thumbnail" src="#" />
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group videosection">
+                                                <input type="text" name="video_url" class="form-control" placeholder="Video URL">
+                                            </div>
+                                            <div class="form-group videosection">
+                                                <div class="add-image-box add-video-box">
+                                                    <a href="javascript:void(0);">
+                                                        <i class="fas fa-circle-play"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="widget-btn">
+                                            <a class="btn btn-black prev_btn">Previous</a>
+                                            <a class="btn btn-info-light next_btn">Next</a>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="field-card">
+                                    <div class="add-course-info">
+                                        <div class="add-course-inner-header">
+                                            <h4>Requirements</h4>
+                                        </div>
+                                        <div class="add-course-form">
+                                            <div class="form-group form-group-tagsinput">
+                                                <input type="text" data-role="tagsinput" class="input-tags form-control" name="html" value="jquery, bootstrap" id="html">
+                                            </div>
+                                            <div class="form-group mb-0">
+                                                <label class="add-course-label">Price</label>
+                                                <input type="number" name="coursePrice" class="form-control" placeholder="10.00">
+                                            </div>
+                                            <div class="form-group mb-0">
+                                                <label class="add-course-label">Course Expire Date</label>
+                                                <input type="date" name="course_expireDate" class="form-control">
+                                            </div>
+
+                                        </div>
+                                        <div class="widget-btn">
+                                            <a class="btn btn-black prev_btn">Previous</a>
+                                            <button type="submit" class="btn btn-info-light next_btn">Publish Course</button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                            <fieldset class="field-card">
+                                <div class="add-course-info">
+                                    <div class="add-course-msg">
+                                        <i class="fas fa-circle-check"></i>
+                                        <h4>The Course Added Succesfully</h4>
+                                        <p>Admin will be Approve soon.</p>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@*Modal section start here*@
+
+
+
+@*Custome Javascript according to the need*@
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script>
+    /*Image preview handle event*/
+    const fileInput = document.getElementById('fileInput');
+    const imagePreview = document.getElementById('imagePreview');
+
+    fileInput.addEventListener('change', function () {
+        const file = fileInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                imagePreview.src = e.target.result;
+                document.getElementById("imageName").innerText = file.name;
+                // Here you can access the file data in e.target.result
+                console.log('File data:', e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+
+
+
+    /*Handle submit data in the table*/
+</script>
+

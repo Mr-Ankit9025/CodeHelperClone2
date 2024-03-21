@@ -1,0 +1,155 @@
+﻿
+@{
+    ViewBag.Title = "CourseVideoSection";
+    Layout = "~/Views/Shared/_InstructorLayout.cshtml";
+}
+
+<section class="page-content course-sec">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+
+                    <div class="widget-set">
+                        <div class="widget-content multistep-form">
+                            <div class="add-course-info">
+                                <div class="add-course-inner-header">
+                                    <h4>Video Curriculum</h4>
+                                </div>
+                                <div class="add-course-section">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        Add Section
+                                    </button>
+                                </div>
+                                <div class="add-course-form">
+                                   @if (Model != null)
+                                               {
+                                                   int i = 0;
+                                                   foreach (System.Data.DataRow data in Model.Rows) {
+                                    <div class="curriculum-grid">
+                                        <div class="curriculum-head">
+                                            <p>Section @i+1: @data["section_name"]</p>
+                                            <button type="button" id='sectionId_@data["section_id"]' class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                                                Add Lecture
+                                            </button>
+                                        </div>
+                                        <div class="curriculum-info">
+                                            <div id="accordion">
+                                                <div class="faq-grid">
+                                                    <div class="faq-header">
+                                                        <a class="collapsed faq-collapse" data-bs-toggle="collapse" href="#collapseOne">
+                                                            <i class="fas fa-align-justify"></i> Introduction
+                                                        </a>
+                                                        <div class="faq-right">
+                                                            <a href="javascript:void(0);">
+                                                                <i class="far fa-pen-to-square me-1"></i>
+                                                            </a>
+                                                            <a href="javascript:void(0);" class="me-0">
+                                                                <i class="far fa-trash-can"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapseOne" class="collapse" data-bs-parent="#accordion">
+                                                        <div class="faq-body">
+                                                            <div class="add-article-btns">
+                                                                <a href="javascript:void(0);" class="btn">Add Article</a>
+                                                                <a href="javascript:void(0);" class="btn me-0">Add Description</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        }
+                                   }
+                                </div>
+                                <div class="widget-btn">
+                                    <a class="btn btn-info-light next_btn">Continue</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<!-- Button trigger modal -->
+<!-- Modal for section -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Section</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+                <form>
+            <div class="modal-body">
+                    <label class="w-100">
+                        Section Name:
+                        <input type="text" id="sectionName" class="form-control" placeholder="Enter section name" />
+                    </label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="saveSection" class="btn btn-primary">Save Sectoin</button>
+            </div>
+                </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Button trigger modal -->
+<!-- Modal for section -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel2">Add Lecture</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+                <form method="post">
+            <div class="modal-body">
+                    <label class="w-100">
+                        Lecture Name:
+                        <input type="text" id="sectionName" class="form-control" placeholder="Enter section name" />
+                    </label>
+                    <label class="w-100">
+                        Video Link:
+                        <input type="text" id="sectionName" class="form-control" placeholder="Please Enter Video Link" />
+                    </label>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+                </form>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+<script>
+    $("saveSection").click(function () {
+        $.ajax({
+            url: "/Instructor/SaveSectionData",
+            type: "get",
+            data: { "course_id":@Request.QueryString["id"], "section_name": $("#sectionName").val() },
+            success: function (res) {
+                alert(res);
+            },
+            error: function (res) {
+                alert(res);
+            }
+        });
+    });
+</script>
