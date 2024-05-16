@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_InstructorLayout.cshtml";
     ViewBag.ActiveClass = "active";
 }
-
+<script src="~/Scripts/jquery-3.4.1.js"></script>
 <div class="settings-widget profile-details">
     <div class="settings-menu p-0">
         <div class="profile-heading">
@@ -17,9 +17,27 @@
                 <p>If you close your account, you will be unsubscribed from all your 0 courses, and will lose access forever.</p>
             </div>
             <div class="un-subscribe p-0">
-                <a href="#" class="btn btn-danger">Delete My Account</a>
+                <a href="#" class="btn btn-danger" id="">Delete My Account</a>
             </div>
         </div>
     </div>
 </div>
 
+<script>
+    $("#manageDeleteAccount").click(function () {
+        let confirmation = confirm("Are you sure want to delete your account.");
+        if (confirmation != false) {
+            $.ajax({
+                url: "/Instructor/RequestForDelete",
+                type: "get",
+                success: function (res) {
+                    alert(res);
+                },
+                error: function (res) {
+                    alert(res);
+                }
+            })
+        }
+    });
+
+</script>

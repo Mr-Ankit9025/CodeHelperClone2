@@ -22,50 +22,46 @@
                                     </button>
                                 </div>
                                 <div class="add-course-form">
-                                   @if (Model != null)
-                                               {
-                                                   int i = 0;
-                                                   foreach (System.Data.DataRow data in Model.Rows) {
-                                    <div class="curriculum-grid">
-                                        <div class="curriculum-head">
-                                            <p>Section @i+1: @data["section_name"]</p>
-                                            <button type="button" id='sectionId_@data["section_id"]' class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-                                                Add Lecture
-                                            </button>
-                                        </div>
-                                        <div class="curriculum-info">
-                                            <div id="accordion">
-                                                <div class="faq-grid">
-                                                    <div class="faq-header">
-                                                        <a class="collapsed faq-collapse" data-bs-toggle="collapse" href="#collapseOne">
-                                                            <i class="fas fa-align-justify"></i> Introduction
-                                                        </a>
-                                                        <div class="faq-right">
-                                                            <a href="javascript:void(0);">
-                                                                <i class="far fa-pen-to-square me-1"></i>
-                                                            </a>
-                                                            <a href="javascript:void(0);" class="me-0">
-                                                                <i class="far fa-trash-can"></i>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div id="collapseOne" class="collapse" data-bs-parent="#accordion">
-                                                        <div class="faq-body">
-                                                            <div class="add-article-btns">
-                                                                <a href="javascript:void(0);" class="btn">Add Article</a>
-                                                                <a href="javascript:void(0);" class="btn me-0">Add Description</a>
+                                    @if (Model != null)
+                                    {
+                                        int i = 0;
+                                        int j = 1;
+                                        foreach (System.Data.DataRow data in Model.Rows)
+                                        {
+                                            i++;
+                                            j++;
+
+
+                                            <div class="accordion" id="outerAccordion">
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="outerHEading_@j">
+                                                        <button class="accordion-button ShowChapterData" id="currentSectionId_@data["section_id"]" data-bs-toggle="collapse"
+                                                                data-bs-target="#outerCollapse_@j" aria-expanded="false" aria-controls="outerCollapse_@j">
+                                                            <div class="curriculum-head">
+                                                                <i class="fas fa-align-justify"></i> &nbsp; Section @i: @data["section_name"]
+                                                                <a id='sectionId_@data["section_id"]' onclick="getsectionID(this)" class="btn ms-5" data-bs-toggle="modal" data-bs-target="#exampleModal2">Add Lecture</a>
+                                                            </div>
+
+                                                        </button>
+                                                    </h2>
+                                                    <div id="outerCollapse_@j" class="accordion-collapse collapse"
+                                                         aria-labelledby="outerHEading_@j" data-bs-parent="#outerAccordion">
+                                                        <div class="accordion-body">
+                                                            <div class="accordion" id="innerAccordion_@data["section_id"]">
+
+
+
+
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
                                         }
-                                   }
+                                    }
                                 </div>
                                 <div class="widget-btn">
-                                    <a class="btn btn-info-light next_btn">Continue</a>
+                                    <a class="btn btn-info-light next_btn" href="/instructor/dashboard">Done</a>
                                 </div>
                             </div>
                         </div>
@@ -80,8 +76,6 @@
 
 
 
-
-<!-- Button trigger modal -->
 <!-- Modal for section -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -90,25 +84,25 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Add Section</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-                <form>
-            <div class="modal-body">
+            <form method="post">
+                <div class="modal-body">
                     <label class="w-100">
                         Section Name:
                         <input type="text" id="sectionName" class="form-control" placeholder="Enter section name" />
                     </label>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" id="saveSection" class="btn btn-primary">Save Sectoin</button>
-            </div>
-                </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" id="saveSection" class="btn btn-primary">Save Sectoin</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
 
-<!-- Button trigger modal -->
-<!-- Modal for section -->
+
+<!-- Modal for section chapter -->
 <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -116,40 +110,150 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel2">Add Lecture</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-                <form method="post">
-            <div class="modal-body">
+            <form method="post">
+                <div class="modal-body">
                     <label class="w-100">
                         Lecture Name:
-                        <input type="text" id="sectionName" class="form-control" placeholder="Enter section name" />
+                        <input type="text" id="chapterName" class="form-control" placeholder="Enter section name" />
                     </label>
                     <label class="w-100">
                         Video Link:
-                        <input type="text" id="sectionName" class="form-control" placeholder="Please Enter Video Link" />
+                        <input type="text" id="chapterVideo" class="form-control" placeholder="Please Enter Video Link" />
                     </label>
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-                </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" id="saveChapterData" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
-<script src="~/Scripts/jquery-3.4.1.js"></script>
 
+
+
+
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Content/assets/js/sweetalert.min.js"></script>
 <script>
-    $("saveSection").click(function () {
+    $("#saveSection").click(function () {
+        debugger;
         $.ajax({
             url: "/Instructor/SaveSectionData",
-            type: "get",
+            type: "POST",
             data: { "course_id":@Request.QueryString["id"], "section_name": $("#sectionName").val() },
+            responseType: "Json",
+            success: function (res) {
+               swal("Successfull",res,"success")
+            },
+            error: function (res) {
+                swal("Error", res, "error");
+            }
+        });
+    });
+
+    function getsectionID(data) {
+        var id = data.id;
+        var sectionarr = id.split("sectionId_");
+
+    $("#saveChapterData").click(function () {
+        debugger;
+        $.ajax({
+            url: "/Instructor/SaveSectionChapter",
+            type: "POST",
+            data: { "chap_name": $("#chapterName").val(), "chap_video": $("#chapterVideo").val(), "course_id":@Request.QueryString["id"], "section_id": sectionarr[1] },
             success: function (res) {
                 alert(res);
             },
             error: function (res) {
                 alert(res);
             }
-        });
+        })
     });
+
+    };
+
+    $(".ShowChapterData").click(function () {
+
+        let id = this.id.slice(17, 18);
+        $.ajax({
+            url: "/Instructor/ShowRelatedData",
+            type: "get",
+            data: { "course_id":@Request.QueryString["id"], "section_id": id },
+            success: function (res) {
+                if (res.length > 0) {
+                    var iter=0;
+                    for (var data of res) {
+                        iter++;
+                    $(`#innerAccordion_${id}`).html(
+                        `  <div class="accordion-item">
+      <h2 class="accordion-header" id="innserHeading_${iter}">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#innserCollapse_${iter}" aria-expanded="true"
+                  aria-controls="innserCollapse_${iter}">
+              ${data.chap_name}
+              <div class="faq-right me-4">
+                  <a href="javascript:void(0);">
+                      <i class="far fa-pen-to-square me-1"></i>
+                  </a>
+                  <a href="javascript:void(0);" class="me-0">
+                      <i class="far fa-trash-can"></i>
+                  </a>
+              </div>
+          </button>
+      </h2>
+      <div id="innserCollapse_${iter}" class="accordion-collapse collapse show"
+           aria-labelledby="innserHeading_${iter}" data-bs-parent="#innerAccordion_${id}">
+          <div class="accordion-body d-flex justify-content-between">
+              <div class="add-article-btns">
+                  <a href="javascript:void(0);" class="btn">Add Article</a>
+                  <a href="javascript:void(0);" class="btn me-0">Add Description</a>
+              </div>
+              <div>
+              <a onclick="getChapterVideo('${data.chap_video}',' ${data.chap_name}')" type="button" data-bs-toggle="modal" data-bs-target="#previewChapterModal">Preview</a>
+              </div>
+          </div>
+      </div>
+  </div>`
+                    );
+                    }
+
+                }
+                else {
+
+                }
+            },
+            error: function () {
+
+            }
+        })
+    });
+
+    function getChapterVideo(videoUrl, chapterName) {
+        debugger
+        $("iframe").attr("src", videoUrl);
+        $("#exampleModalLabel3").text(chapterName);
+    }
 </script>
+
+
+<!-- Modal -->
+<div class="modal fade" id="previewChapterModal" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel3"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <iframe class="form-control" src="" height="550" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

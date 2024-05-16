@@ -1,0 +1,218 @@
+﻿
+@{
+    ViewBag.Title = "EnrollForCourse";
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
+}
+
+
+@{
+    Double coursePrice = Convert.ToDouble(Model.Tables[1].Rows[0]["course_price"]);
+    Double discount = Convert.ToDouble(Model.Tables[1].Rows[0]["Discount"]);
+    Double Percentage = (discount / coursePrice) * 100;
+
+    Double TotalPrice = coursePrice - discount;
+
+}
+
+<div class="page-content">
+    <div class="container">
+        <div class="row justify-content-center">
+
+            <div class="col-xl-9 col-md-8">
+                <div class="settings-widget profile-details">
+                    <div class="settings-menu invoice-list-blk p-0 ">
+                        <div class="card pro-post border-0 mb-0">
+                            <div class="card-body">
+                                <div class="invoice-item">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="invoice-logo">
+                                                <img src="/content/assets/img/logo.svg" alt="logo">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="invoice-details">
+                                                <strong>Order:</strong> #@ViewBag.OrderId <br>
+                                                <strong>Issued:</strong> @DateTime.Now.Date.ToShortDateString()
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="invoice-item">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="invoice-info">
+                                                <strong class="customer-text">Invoice From</strong>
+                                                <p class="invoice-details invoice-details-two">
+                                                    Dreams LMS <br>
+                                                    86 Kalyanpur, The Presidency, Lucknow,<br>
+                                                    Uttar PRadesh, India <br>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="invoice-info invoice-info2">
+                                                <strong class="customer-text">Invoice To</strong>
+                                                <p class="invoice-details">
+                                                    @Model.Tables[0].Rows[0]["st_name"]<br>
+                                                    @Model.Tables[0].Rows[0]["st_email"]<br>
+                                                    @Model.Tables[0].Rows[0]["st_mobile"]<br>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="invoice-item">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="invoice-info">
+                                                <strong class="customer-text">Payment Method</strong>
+                                                <p class="invoice-details invoice-details-two">
+                                                    Debit Card <br>
+                                                    XXXXXXXXXXXX-2541 <br>
+                                                    HDFC Bank<br>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="invoice-item invoice-table-wrap">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="invoice-table table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Course</th>
+                                                            <th>Course Level</th>
+                                                            <th>Course Expiry</th>
+                                                            <th class="text-end">Total</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>@Model.Tables[1].Rows[0]["course_title"]</td>
+                                                            <td>@Model.Tables[1].Rows[0]["course_level"]</td>
+                                                            <td>@Model.Tables[1].Rows[0]["course_ExpireDate"]</td>
+                                                            <td class="text-end">₹ @Model.Tables[1].Rows[0]["course_price"]</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-xl-4 ms-auto">
+                                            <div class="table-responsive">
+                                                <table class="invoice-table-two table table-borderless">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>Subtotal:</th>
+                                                            <td><span>₹ @Model.Tables[1].Rows[0]["course_price"]</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Discount:</th>
+                                                            <td><span>-@Percentage.ToString("0.00")%</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Total Amount:</th>
+                                                            <td><span>₹@TotalPrice.ToString("0.00")</span></td>
+                                                        </tr>
+                                                    </tbody>
+
+                                                </table>
+                                                <p class="text-end">
+
+                                                    <button id="submitEnroll" class="btn btn-success">Enroll</button>
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="~/Content/assets/js/sweetalert.min.js"></script>
+
+<script>
+
+     let orderId = "@ViewBag.OrderId";
+     let options = {
+         "name": "Code Helper",
+         "description": "Buy Green Tea",
+         "order_id": orderId,
+         "image": "https://localhost:44372/Content/assets/img/logo/logo.png",
+         "prefill": {
+             "name": "@Model.Tables[0].Rows[0]["st_name"]",
+             "email": "@Model.Tables[0].Rows[0]["st_email"]",
+             "contact": "@Model.Tables[0].Rows[0]["st_mobile"]",
+         },
+         "notes": {
+             "address": "Test Payment"
+         },
+         "theme": {
+             "color": "#3399cc"
+         }
+     }
+     // Boolean whether to show image inside a white frame. (default: true)
+     options.theme.image_padding = false;
+    options.handler = function (response) {
+        $.ajax({
+            url: "/home/ManagePayment",
+            type: "get",
+            data: { paymentId: response.razorpay_payment_id, orderId: orderId, signature: response.razorpay_signature },
+            responseType: "Json",
+            success: function (res) {
+                swal("sucess", res, "success");
+                $.ajax({
+    url: "/home/CourseEnrollData",
+    type: "post",
+    data: { "adminId": @Model.Tables[1].Rows[0]["course_admin_id"], "courseId": @Model.Tables[1].Rows[0][0], "st_Id": "@Model.Tables[0].Rows[0]["st_email"]", "course_dis": @Model.Tables[1].Rows[0]["Discount"], coursePrice: @Model.Tables[1].Rows[0]["course_price"]},
+    responseType: "Json",
+    success: function (res) {
+        swal("success", res, "success");
+        location.href = "/home/mycourse";
+    },
+    error: function () {
+        swal("error", "Some Error Occured. Please try after sometime.", "error");
+    }
+})
+            },
+            error: function () {
+                swal("Sorry! Please wait", "Server down please try after some time", "error");
+            }
+        });
+     };
+     options.modal = {
+         ondismiss: function () {
+             console.log("This code runs when the popup is closed");
+         },
+         // Boolean indicating whether pressing escape key
+         // should close the checkout form. (default: true)
+         escape: true,
+         // Boolean indicating whether clicking translucent blank
+         // space outside checkout form should close the form. (default: false)
+         backdropclose: false
+     };
+     var rzp = new Razorpay(options);
+    $("#submitEnroll").click(function (e) {
+        rzp.open();
+        e.preventDefault();
+
+    });
+</script>

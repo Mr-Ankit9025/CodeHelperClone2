@@ -34,12 +34,12 @@
                                     <h5>Beginner</h5>
                                     <img src="/content/assets/img/instructor-profile-bg.jpg" alt>
                                     <div class="profile-img">
-                                        <a href="instructor-profile.html"><img src="/content/assets/img/user/user15.jpg" alt></a>
+                                        <a href="instructor-profile.html"><img src="/content/assets/img/user/user15.jpg" id="instructorProfile" alt></a>
                                     </div>
                                 </div>
                                 <div class="profile-group">
                                     <div class="profile-name text-center">
-                                        <h4><a href="instructor-profile.html">Jenny Wilson</a></h4>
+                                        <h4><a href="instructor-profile.html" id="Inst_name">Jenny Wilson</a></h4>
                                         <p>Instructor</p>
                                     </div>
                                     <div class="go-dashboard text-center">
@@ -73,22 +73,17 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="instructor-orders.html" class="nav-link">
+                                        <a href="/instructor/InstructorOrder" class="nav-link">
                                             <i class="feather-shopping-bag"></i> Orders
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="instructor-student-grid.html" class="nav-link">
+                                        <a href="/instructor/StudentList" class="nav-link">
                                             <i class="feather-users"></i> Students
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="instructor-payouts.html" class="nav-link">
-                                            <i class="feather-dollar-sign"></i> Payouts
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="instructor-tickets.html" class="nav-link">
+                                        <a href="/instructor/supportTickets" class="nav-link">
                                             <i class="feather-server"></i> Support Tickets
                                         </a>
                                     </li>
@@ -165,5 +160,19 @@
     <script src="~/content/assets/plugins/apexchart/apexcharts.min.js"></script>
     <script src="~/content/assets/plugins/apexchart/chart-data.js"></script>
     <script src="~/content/assets/js/script.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: "/instructor/FetchLogedinData",
+                type: "get",
+                data: { userId: "@User.Identity.Name" },
+                success: function (res) {
+                    $("#instructorProfile").attr("src", "/Content/images/InstructorProfile/" + res[0]);
+                    $("#Inst_name").text    (res[1]);
+                }
+            })
+        })
+    </script>
 </body>
 </html>

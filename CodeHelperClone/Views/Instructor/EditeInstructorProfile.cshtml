@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_InstructorLayout.cshtml";
     ViewBag.ActiveClass = "active";
 }
-
+<script src="~/content/ckeditor2.js"></script>
 <div class="settings-widget profile-details">
     <div class="settings-menu p-0">
         <div class="profile-heading">
@@ -13,7 +13,7 @@
         </div>
         <div class="course-group mb-0 d-flex">
             <div class="course-group-img d-flex align-items-center">
-                <a href="instructor-profile.html"><img src="/content/assets/img/user/user11.jpg" alt class="img-fluid"></a>
+                <a href="instructor-profile.html"><img src="~/content/images/InstructorProfile/@Model["profile_pic"]"  class="img-fluid"></a>
                 <div class="course-name">
                     <h4><a href="instructor-profile.html">Your avatar</a></h4>
                     <p>PNG or JPG no bigger than 800px wide and tall.</p>
@@ -29,75 +29,85 @@
                 <h4>Personal Details</h4>
                 <p>Edit your personal information and address.</p>
             </div>
-            <form action="#">
+            <form method="post">
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label class="form-control-label">First Name</label>
-                            <input type="text" class="form-control" placeholder="Enter your first Name">
+                            <label class="form-control-label">Full Name</label>
+                            <input type="text" name="name" class="form-control" value="@Model["Name"]" placeholder="Enter your first Name">
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="form-control-label">Last Name</label>
-                            <input type="text" class="form-control" placeholder="Enter your last Name">
-                        </div>
-                    </div>
+
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label class="form-control-label">Phone</label>
-                            <input type="text" class="form-control" placeholder="Enter your Phone">
+                            <input type="text" name="mobile" class="form-control" value="@Model["mobile_number"]" placeholder="Enter your Phone">
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label class="form-control-label">Email</label>
-                            <input type="text" class="form-control" placeholder="Enter your Email">
+                            <input type="text" name="email" class="form-control" value="@Model["email"]" readonly placeholder="Enter your Email">
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label class="form-control-label">Birthday</label>
-                            <input type="text" class="form-control" placeholder="Birth of Date">
+                            <label class="form-control-label w-100">Gender</label>
+                            @if (Model["gender"] == "male")
+            {
+
+                            <input type="radio" name="gender" value="male" checked> <span>Male</span>
+            }
+else
+            {
+                            <input type="radio" name="gender" value="male"> <span>Male</span>
+
+            }
+
+
+
+
+                            @if (Model["gender"] == "female")
+            {
+
+                           <input type="radio" checked name="gender" value="female"> <span>Female</span>
+            }
+else
+            {
+                           <input type="radio" name="gender" value="female"> <span>Female</span>
+
+            }
+                            @if (Model["gender"] == "other")
+            {
+
+                           <input type="radio" checked name="gender" value="other"> <span>Other</span>
+            }
+else
+            {
+                           <input type="radio" name="gender" value="other"> <span>Other</span>
+
+            }
                         </div>
                     </div>
+
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label class="form-label">Country</label>
-                            <select class="form-select select country-select" name="sellist1">
-                                <option>Select country</option>
-                                <option>India</option>
-                                <option>America</option>
-                                <option>London</option>
-                            </select>
+                            <label class="form-control-label">Profile Summary</label>
+                            <input type="text" name="summary" value="@Model["summary"]" class="form-control" placeholder="Enter your last Name">
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="form-group">
-                            <label class="form-control-label">Address Line 1</label>
-                            <input type="text" class="form-control" placeholder="Address">
+                            <label class="form-control-label">Tell Me About Yourself</label>
+                            <textarea name="about_Int" id="Ckeditor2">@Model["About_Instructor"]</textarea>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="form-control-label">Address Line 2 (Optional)</label>
-                            <input type="text" class="form-control" placeholder="Address">
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="form-control-label">City</label>
-                            <input type="text" class="form-control" placeholder="Enter your City">
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="form-control-label">ZipCode</label>
-                            <input type="text" class="form-control" placeholder="Enter your Zipcode">
-                        </div>
-                    </div>
+                    <script>
+
+    ClassicEditor.create(document.querySelector("#Ckeditor2"))
+                    </script>
                     <div class="update-profile">
-                        <button type="button" class="btn btn-primary">Update Profile</button>
+                        <button type="submit" class="btn btn-primary">Update Profile</button>
                     </div>
                 </div>
             </form>

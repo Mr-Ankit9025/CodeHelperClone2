@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewBag.Title = "MyCourse";
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
+}
+
+<link rel="stylesheet" href="/content/assets/plugins/aos/aos.css">
+<section class="course-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+
+                <div class="showing-list">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="d-flex align-items-center">
+                                <div class="view-icons">
+                                    <a href="course-grid.html" class="grid-view"><i class="feather-grid"></i></a>
+                                    <a href="course-list.html" class="list-view active"><i class="feather-list"></i></a>
+                                </div>
+                                <div class="show-result">
+                                    <h4>Showing 1-9 of 50 results</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="show-filter add-course-info ">
+                                <form action="#">
+                                    <div class="row gx-2 align-items-center">
+                                        <div class="col-md-6 col-item">
+                                            <div class=" search-group">
+                                                <i class="feather-search"></i>
+                                                <input type="text" class="form-control" placeholder="Search our courses">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-6 col-item">
+                                            <div class="form-group select-form mb-0">
+                                                <select class="form-select select" name="sellist1">
+                                                    <option>Newly published </option>
+                                                    <option>published 1</option>
+                                                    <option>published 2</option>
+                                                    <option>published 3</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    @if (Model != null) { 
+                    foreach(System.Data.DataRow row in Model.Rows)
+                {
+
+                    <div class="col-lg-12 col-md-12 d-flex">
+                        <div class="course-box course-design list-course d-flex">
+                            <div class="product">
+                                <div class="product-img">
+                                    <a href="course-details.html">
+                                        <img class="img-fluid" alt src="~/content/images/courseImage/@row["courseImg"]">
+                                    </a>
+                                </div>
+                                <div class="product-content">
+                                    <div class="head-course-title">
+                                        <h3 class="title"><a href="course-details.html">@row["course_title"]</a></h3>
+                                        <div class="all-btn all-category d-flex align-items-center">
+                                            <a href="/home/Play_Course_Video?id=@row["sr"]" class="btn btn-primary">Play Video</a>
+                                        </div>
+                                    </div>
+                                    <div class="course-info border-bottom-0 pb-0 d-flex align-items-center">
+                                        <div class="rating-img d-flex align-items-center">
+                                            <img src="/content/assets/img/icon/icon-01.svg" alt>
+                                            <p>@row["video_count"]+ Lesson</p>
+                                        </div>
+                                        <div class="course-view d-flex align-items-center">
+                                            <img src="/content/assets/img/icon/icon-02.svg" alt>
+                                            <p>9hr 30min</p>
+                                        </div>
+                                    </div>
+                                    <div class="rating">
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span class="d-inline-block average-rating"><span>4.0</span> (15)</span>
+                                    </div>
+                                    <div class="course-group d-flex mb-0">
+                                        <div class="course-group-img d-flex">
+                                            <a href="instructor-profile.html"><img src="~/content/images/InstructorProfile/@row["inst_profile"]" alt class="img-fluid"></a>
+                                            <div class="course-name">
+                                                <h4><a href="instructor-profile.html">@row["Name"]</a></h4>
+                                                <p>Instructor</p>
+                                            </div>
+                                        </div>
+                                        <div class="course-share d-flex align-items-center justify-content-center">
+                                            <a href="#rate"><i class="fa-regular fa-heart"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                        }
+                    }
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="pagination lms-page">
+                            <li class="page-item prev">
+                                <a class="page-link" href="javascript:void(0)" tabindex="-1"><i class="fas fa-angle-left"></i></a>
+                            </li>
+                            <li class="page-item first-page active">
+                                <a class="page-link" href="javascript:void(0)">1</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="javascript:void(0)">2</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="javascript:void(0)">3</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="javascript:void(0)">4</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="javascript:void(0)">5</a>
+                            </li>
+                            <li class="page-item next">
+                                <a class="page-link" href="javascript:void(0)"><i class="fas fa-angle-right"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+           
+        </div>
+    </div>
+</section>
+
+
+
+<script src="/content/assets/plugins/aos/aos.js"></script>

@@ -1,0 +1,196 @@
+﻿
+@{
+    ViewBag.Title = "StudentList";
+    Layout = "~/Views/Shared/_InstructorLayout.cshtml";
+}
+
+<div class="tak-instruct-group">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="settings-widget">
+                <div class="settings-inner-blk p-0">
+                    <div class="sell-course-head student-meet-head comman-space border-0">
+                        <div class="tak-head d-flex align-items-center">
+                            <div>
+                                <h3>Students</h3>
+                                <p>Meet people taking your course.</p>
+                            </div>
+                            <div class="view-icons">
+                                <a href="#" class="grid-view" id="grid-view"><i class="feather-grid"></i></a>
+                                <a href="#" class="list-view" id="list-view"><i class="feather-list"></i></a>
+                            </div>
+                        </div>
+                        <form>
+                            <div class="student-search-form d-flex ">
+                                <div class="form-group mb-0">
+                                    <input type="text" class="form-control" placeholder="Twitter Profile Name">
+                                </div>
+                                <div class="export-cvv-btn">
+                                    <a href="/instructor/ExportToCsv" class="btn btn-primary">Export CSV</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="gridItem">
+        @if (Model != null) {
+            foreach (System.Data.DataRow row in Model.Rows)
+            {
+
+        <div class="col-xl-4 col-lg-6 col-md-6 d-flex">
+            <div class="student-box flex-fill">
+                <div class="student-box-blks">
+                    <div class="message-text-img">
+                        <a href="javascript:;">
+                            <img class="img-fluid" alt="Students Info" src="/content/assets/img/icon/message-text.svg">
+                        </a>
+                    </div>
+                    <div class="student-img">
+                        <a href="student-profile.html">
+                            <img class="img-fluid" alt="Students Info" src="~/content/images/StudentProfile/@row["st_profile"] ">
+                        </a>
+                    </div>
+                    <div class="student-content pb-0">
+                        <h5><a href="student-profile.html">@row["st_name"]</a></h5>
+                        <div class="loc-blk d-flex align-items-center justify-content-center">
+                            <i class="feather-map-pin me-2"></i>
+                            <p>United States</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="enrol-student-foot">
+                    <ul>
+                        <li>Enrolled &nbsp;<span> @Convert.ToDateTime(row["enrollData"]).ToLongDateString()</span></li>
+                        <li>
+                            Progress
+                            <div class="instruct-stip d-flex align-items-center">
+                                <span>20%</span>
+                                <div class="course-stip progress-stip">
+                                    <div class="progress-bar bg-success progress-bar-striped active-stip"></div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+            }
+        }
+        </div>
+        <div class="settings-widget" id="listItem">
+            <div class="settings-inner-blk p-0">
+                <div class="comman-space pb-0">
+                    <div class="settings-referral-blk table-responsive">
+
+                        <table class="table table-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <div class="form-check instruct-check-list">
+                                            <input class="form-check-input" type="checkbox" name="option1">
+                                        </div>
+                                    </th>
+                                    <th>NAME</th>
+                                    <th>ENROLLED</th>
+                                    <th>PROGRESS</th>
+                                    <th>LOCATIONS</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if(Model!= null)
+            {
+                foreach(System.Data.DataRow row in Model.Rows)
+                {
+<tr>
+    <td>
+        <div class="form-check instruct-check-list">
+            <input class="form-check-input" type="checkbox" name="option1">
+        </div>
+    </td>
+    <td>
+        <a href="student-profile.html" class="refer-avatar-blk d-flex align-items-center">
+            <img src="~/content/images/StudentProfile/@row["st_profile"] " class="rounded-circle me-2" height="40" width="40" alt="Referred User Info">
+            <p>@row["st_name"]</p>
+        </a>
+    </td>
+    <td>@Convert.ToDateTime(row["enrollData"]).ToLongDateString()</td>
+    <td>0%</td>
+    <td><i class="feather-map-pin me-1"></i>United States</td>
+    <td><a href="javascript:;" class="btn-style"><i class="feather-clipboard"></i></a></td>
+</tr>
+                }
+            }
+                                
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="peginatonItem">
+        <div class="col-md-12">
+            <ul class="pagination lms-page mt-0">
+                <li class="page-item prev">
+                    <a class="page-link" href="javascript:void(0);" tabindex="-1"><i class="fas fa-angle-left"></i></a>
+                </li>
+                <li class="page-item first-page active">
+                    <a class="page-link" href="javascript:void(0);">1</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);">2</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);">3</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);">4</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);">5</a>
+                </li>
+                <li class="page-item next">
+                    <a class="page-link" href="javascript:void(0);"><i class="fas fa-angle-right"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#gridItem").show();
+        $("#gridItem").addClass("active");
+        $("#listItem").hide();
+        $("#peginatonItem").show();
+    })
+
+    $("#grid-view").click(function () {
+        $("#gridItem").show();
+        $("#gridItem").addClass("active");
+
+        $("#listItem").hide();
+        $("#listItem").removeClass("active");
+        $("#peginatonItem").show();
+
+    });
+
+
+    $("#list-view").click(function () {
+        $("#gridItem").hide();
+        $("#listItem").show();
+
+        $("#gridItem").removeClass("active");
+        $("#listItem").addClass("active");
+        $("#peginatonItem").hide();
+    });
+</script>

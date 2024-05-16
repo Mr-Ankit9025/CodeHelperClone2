@@ -10,7 +10,15 @@
             <div class="card-body">
                 <div class="instructor-inner">
                     <h6>REVENUE</h6>
-                    <h4 class="instructor-text-success">$467.34</h4>
+                    @if (!Model.Rows[0]["TotalIncome"].Equals(DBNull.Value))
+            {
+                    <h4 class="instructor-text-success"> ₹@Model.Rows[0]["TotalIncome"]</h4>
+            }
+else
+            {
+                    <h4 class="instructor-text-success"> ₹0</h4>
+
+            }
                     <p>Earning this month</p>
                 </div>
             </div>
@@ -21,7 +29,7 @@
             <div class="card-body">
                 <div class="instructor-inner">
                     <h6>STUDENTS ENROLLMENTS</h6>
-                    <h4 class="instructor-text-info">12,000</h4>
+                    <h4 class="instructor-text-info">@Model.Rows[0]["TotalStudent"]</h4>
                     <p>New this month</p>
                 </div>
             </div>
@@ -140,4 +148,3 @@
         </div>
     </div>
 </div>
-

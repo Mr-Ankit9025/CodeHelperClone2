@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "Play_Course_Video";
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
+}
+
+<section class="page-content course-sec course-lesson" style="margin-top:100px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+
+                <div class="lesson-group">
+                    @if (Model != null)
+                                {
+                                    int n =0;
+                                    foreach (System.Data.DataRow row in Model.Rows)
+                                    {
+                            n++;
+                            <div class="course-card">
+                                <h6 class="cou-title">
+                                    <a class="collapsed" data-bs-toggle="collapse" onclick="ShowRelatedVideo(@row["section_id"])" href="#collapse_@n" aria-expanded="false">@row["section_Name"]</a>
+                                </h6>
+                                <div id="collapse_@n" class="card-collapse collapse">
+                                    <ul id="chapter_@row["section_id"]">
+                                    </ul>
+                                </div>
+                            </div>
+
+                        }
+                    }
+
+                </div>
+
+            </div>
+            <div class="col-lg-8">
+
+                <div class="student-widget lesson-introduction">
+                    <div class="lesson-widget-group">
+                        <h4 class="tittle" id="videoTitle">@Model.Rows[0]["section_Name"]</h4>
+                        <div class="introduct-video">
+                            <iframe class="form-control" height="450" src="" id="video_url" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+<script>
+    function ShowRelatedVideo(id) {
+        let courseid = @Request.QueryString["id"];
+        $.ajax({
+            url: "/home/ShowSelectedChapter",
+            type: "get",
+            data: { "courseId": courseid, "sectionId": id },
+            success: function (res) {
+                if (res.length > 0) {
+                    for (var data of res) {
+                        $(`#chapter_${id}`).html(
+                            `
+                            <li>
+                              <p class="play-intro">${data.chap_name}</p>
+                               <div>
+                               <a href="#${data.chap_name}" onclick="playRelatedVideo('${data.chap_video}', '${data.chap_name}')">
+                                 <img src="/content/assets/img/icon/play-icon.svg" alt>
+                               </a>
+                                 </div>
+                            </li>
+                            `
+                        );
+                    }
+                }
+            },
+            error: function () {
+                alert("Please try again");
+            }
+        });
+    }
+
+
+    function playRelatedVideo(url, title) {
+        $("#video_url").attr("src", url +'&modestbranding=0&showinfo=0');
+        $("#videoTitle").text(title);
+    }
+</script>

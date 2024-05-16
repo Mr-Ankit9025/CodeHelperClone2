@@ -2,7 +2,6 @@
 @{
     ViewBag.Title = "InstructorCourse";
     Layout = "~/Views/Shared/_InstructorLayout.cshtml";
-    ViewBag.ActiveClass = "active";
 }
 
 <div class="row">
@@ -79,7 +78,7 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td><a class="btn btn-primary" href="/instructor/CourseVideoSection/@data[0]">Add Video</a></td>
+                                            <td><a class="btn btn-primary" href="/instructor/CourseVideoSection?id=@data[0]">Add Video</a></td>
                                             <td>3200</td>
                                             <td><span class="badge info-low">@data["course_status"]</span></td>
                                         </tr>

@@ -1,0 +1,149 @@
+﻿
+@{
+    ViewBag.Title = "addTickets";
+    Layout = "~/Views/Shared/_InstructorLayout.cshtml";
+}
+<div class="row">
+    @if (ViewBag.alertMessage != null)
+            {
+                <p class="alert alert-@ViewBag.alertTyper">@ViewBag.alertMessage</p>
+            }
+    <div class="col-md-12">
+        <div class="filter-grp ticket-grp tiket-suport d-flex align-items-center justify-content-between">
+            <div>
+                <h3>Support Tickets</h3>
+            </div>
+            <div class="ticket-btn-grp">
+                <a href="/instructor/supportTickets">Back to Tickets</a>
+            </div>
+        </div>
+        <div class="settings-widget">
+            <div class="settings-inner-blk add-course-info new-ticket-blk p-0">
+                <div class="comman-space">
+                    <h4>Create New Support Ticket</h4>
+                    <div>
+                        <form method="post" id="validForm">
+                            <div class="form-group">
+                                <label class="form-control-label">User Email</label>
+                                <input type="email" id="checkEmail" class="form-control" name="userEmail">
+                                <span id="alertMsg"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Select course</label>
+                                <select class="form-select select country-select" id="course_id" onchange="CheckFee(this)" name="course">
+                                    <option disabled selected>Choose Category</option>
+                                    @if (Model != null) { 
+                                    foreach(System.Data.DataRow row in Model.Rows)
+                {
+                    <option value="@row["sr"]">@row["course_title"]</option>
+                }
+                                    }
+                                    <option></option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Course Fee</label>
+                                <input type="text" readonly class="form-control" id="course_fee" name="courseFee"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="add-course-label">Course Expiry</label>
+                                <input type="text" readonly class="form-control" id="course_expire"  name="courseExpiry"/>
+                            </div>
+                            <div class="form-group ">
+                                <label class="add-course-label">Extra Discount</label>
+                                <input type="number" class="form-control" name="extraDiscount"/>
+                            </div>
+                            <div class="form-group ">
+                                <label class="add-course-label">Ticket Validity</label>
+                                <input type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" name="dis_validity" class="form-control" />
+                            </div>
+
+
+                            <div class="submit-ticket">
+                                <button type="button" id="checkValidUser" class="btn btn-primary">Submit</button>
+                                <button type="reset" class="btn btn-dark">Reset</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Content/assets/js/sweetalert.min.js"></script>
+<script>
+    $("#checkEmail").blur(function () {
+        $.ajax({
+            url: "/instructor/checkUser",
+            type: "get",
+            data: { email: $("#checkEmail").val() },
+            success: function (res) {
+                if (res == 1) {
+                    $("#alertMsg").text("Good Job");
+                    $("#alertMsg").css("color", "green");
+
+                    $("#checkEmail").css("border", "2px solid green");
+                }
+                else {
+                    $("#alertMsg").text("User not found");
+                    $("#alertMsg").css("color", "red");
+                    $("#checkEmail").css("border", "2px solid red");
+                }
+            },
+            error: function () {
+                swal("Error", "Some error occured", "error");
+            }
+        })
+    });
+
+
+    
+    function CheckFee(data) {
+        $.ajax({
+            url: "/Instructor/CheckCourseDetail",
+            type: "get",
+            data: { courseid: data.value },
+            success: function (res) { 
+                if (res.length > 0) {
+                    $("#course_fee").val(res[1]);
+                    $("#course_expire").val(res[0]);
+                }
+            },
+            error: function () {
+                swal("Error", "Some Error Occured", "error");
+            }
+        })
+    }
+
+
+    $("#checkValidUser").click(function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: "/Instructor/CheckValidUser",
+            type: "get",
+            data: { st_email: $("#checkEmail").val(), course: $("#course_id").val() },
+            success: function (res) {
+                debugger;
+                if (res == 1) {
+                    $("#alertMsg").text("valid User.");
+                    $("#alertMsg").css("color", "green");
+                    $("#checkEmail").css("border", "2px solid green");
+                    $("#validForm").submit();
+                }
+
+                else {
+                    swal("Sorry !", "This user have already some extra discount.", "warning");
+                    $("#alertMsg").text("This user have already discount.");
+                    $("#alertMsg").css("color", "red");
+                    $("#checkEmail").css("border", "2px solid red");
+                }
+            },
+            error: function () {
+                swal("Sorry !", "Some Error Occured", "error");
+            }
+        })
+    })
+
+</script>

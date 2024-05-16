@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace CodeHelperClone.Controllers
 {
-    
+    [Authorize(Roles ="Admin")]
     public class AdminController : Controller
     {
         DBLayer db = new DBLayer();

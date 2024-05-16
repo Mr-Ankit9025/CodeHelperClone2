@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "InstructorOrder";
+    Layout = "~/Views/Shared/_InstructorLayout.cshtml";
+}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="settings-widget">
+                <div class="settings-inner-blk p-0">
+                    <div class="sell-course-head comman-space">
+                        <h3>Orders</h3>
+                        <p>Order Dashboard is a quick overview of all current orders.</p>
+                    </div>
+                    <div class="comman-space pb-0">
+                        <div class="settings-tickets-blk course-instruct-blk table-responsive">
+
+                            <table class="table table-nowrap mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>COURSES</th>
+                                        <th>SALES</th>
+                                        <th>DATE</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                @if (Model != null)
+                                {
+
+
+
+<tbody>
+                                    @foreach (System.Data.DataRow row in Model.Rows)
+                                    {
+
+
+                                    <tr>
+                                        <td class="instruct-orders-info">
+                                            <p><a href="course-details.html">@row["course_title"]</a></p>
+                                        </td>
+                                        <td>@row["sales"]</td>
+                                        <td>@Convert.ToDateTime(row["enrollData"]).ToShortDateString()</td>
+                                        <td><a href="javascript:;"><i class="feather-more-vertical"></i></a></td>
+                                    </tr>
+                                    }
+                                </tbody>
+                                }
+else
+            {
+                <h2 class="text-center text-warning">Not any order yet.</h2>
+            }
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+

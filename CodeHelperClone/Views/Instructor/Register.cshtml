@@ -69,23 +69,38 @@
                         <div class="img-logo">
                             <img src="/Content/assets/img/logo.svg" class="img-fluid" alt="Logo">
                             <div class="back-home">
-                                <a href="index-2.html">Back to Home</a>
+                                <a href="/Instructor/dashboard">Back to Login</a>
                             </div>
                         </div>
                         <h1>Sign up</h1>
-                        <form action="https://dreamslms.dreamguystech.com/html/login.html">
+                        <form method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label class="form-control-label">Full Name</label>
-                                <input type="text" class="form-control" placeholder="Enter your Full Name">
+                                <input type="text" name="name" class="form-control" placeholder="Enter your Full Name">
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label">Email</label>
-                                <input type="email" class="form-control" placeholder="Enter your email address">
+                                <input type="email" name="email" class="form-control" placeholder="Enter your email address">
                             </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Mobile No.</label>
+                                <input type="number" name="mobile" class="form-control" placeholder="Enter your mobile number">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Gender</label>
+                                <input type="radio" name="gender" value="male">Male
+                                <input type="radio" name="gender" value="female">Female
+                                <input type="radio" name="gender" value="other">Other
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Profile Picture</label>
+                                <input type="file" name="profile_pic" class="form-control" />
+                            </div>
+
                             <div class="form-group">
                                 <label class="form-control-label">Password</label>
                                 <div class="pass-group" id="passwordInput">
-                                    <input type="password" class="form-control pass-input" placeholder="Enter your password">
+                                    <input type="password" name="password" class="form-control pass-input" placeholder="Enter your password">
                                     <span class="toggle-password feather-eye"></span>
                                     <span class="pass-checked"><i class="feather-check"></i></span>
                                 </div>

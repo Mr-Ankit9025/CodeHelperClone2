@@ -21,4 +21,15 @@ namespace CodeHelperClone.Models
         public int coursePrice { get; set; }
 
     }
+
+
+    public class chapterModel
+    {
+        public int id { get; set; }
+        public string chap_name { get; set; }
+        public string chap_video { get; set; }
+        public int course_id { get; set; }
+        public int section_id { get; set; }
+
+    }
 }
