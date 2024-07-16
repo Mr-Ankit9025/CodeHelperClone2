@@ -61,7 +61,7 @@ namespace CodeHelperClone.Controllers
         public async Task<ActionResult> googleLogin(string code)
         {
             var clientID = "211310085751-611umg73771eeoaoic1cc8ld66afvjbg.apps.googleusercontent.com";
-            var url = "https://localhost:44372/login/googleLogin";
+            var url = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority)+"/login/googleLogin";
             var clientSecrete = "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";
             var token = await GoogleAuth.GetAuthAccessToken(code,clientID, clientSecrete, url);
             var profile = await GoogleAuth.GetProfileResponseAsync(token.AccessToken.ToString());
